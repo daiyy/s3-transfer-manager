@@ -1,6 +1,6 @@
 [package]
 name = "s3-transfer-manager"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["daiyy <daiyiyang@hotmail.com>"]
 readme = "README.md"
