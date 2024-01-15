@@ -49,9 +49,9 @@ impl S3TransferConfig {
 pub struct S3TransferManager {
     client: S3Client,
     config: Option<S3TransferConfig>,
-    set_progress_length: Option<Box<dyn Fn(usize)>>,
-    progress_callback: Option<Box<dyn Fn(usize)>>,
-    progress_finished: Option<Box<dyn Fn()>>,
+    set_progress_length: Option<Box<dyn Fn(usize) + Send + Sync>>,
+    progress_callback: Option<Box<dyn Fn(usize) + Send + Sync>>,
+    progress_finished: Option<Box<dyn Fn() + Send + Sync>>,
 }
 
 impl S3TransferManager {
@@ -93,9 +93,9 @@ impl S3TransferManager {
     }
 
     pub fn with_update_progress(mut self,
-            set_progress_length: impl Fn(usize) + 'static,
-            progress_callback: impl Fn(usize) + 'static,
-            progress_finished: impl Fn() + 'static
+            set_progress_length: impl Fn(usize) + Send + Sync + 'static,
+            progress_callback: impl Fn(usize) + Send + Sync + 'static,
+            progress_finished: impl Fn() + Send + Sync + 'static
     ) -> Self {
         self.set_progress_length = Some(Box::new(set_progress_length));
         self.progress_callback = Some(Box::new(progress_callback));

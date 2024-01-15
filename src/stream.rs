@@ -5,11 +5,11 @@ use aws_smithy_types::byte_stream::{ByteStream, error::Error};
 
 pub(crate) struct ByteStreamProgress<'a> {
     inner: ByteStream,
-    progress_callback: Option<&'a dyn Fn(usize)>,
+    progress_callback: Option<&'a (dyn Fn(usize) + Send + Sync)>,
 }
 
 impl<'a> ByteStreamProgress<'a> {
-    pub fn new(stream: ByteStream, progress_callback: Option<&'a dyn Fn(usize)>) -> Self {
+    pub fn new(stream: ByteStream, progress_callback: Option<&'a (dyn Fn(usize) + Send + Sync)>) -> Self {
         Self {
             inner: stream,
             progress_callback: progress_callback,
