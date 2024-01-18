@@ -197,9 +197,7 @@ impl S3TransferManager {
         }
     }
 
-    /*
-    pub fn resumeDownloadFile() -> Result<()> {
+    pub async fn resume_download_file(&self, _: &str, _: impl AsRef<Path>) -> Result<(), Error> {
         todo!();
     }
-    */
 }
